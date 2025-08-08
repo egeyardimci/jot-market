@@ -62,21 +62,21 @@ function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) 
   const visiblePages = getVisiblePages();
 
   return (
-    <div className="w-full flex items-center justify-center gap-2 py-4">
+    <div className="w-full flex items-center justify-center gap-1 md:gap-2 py-3 md:py-4">
       {/* Previous Button */}
       <button
         onClick={handlePrevious}
         disabled={currentPage === 1}
-        className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded transition-colors ${
+        className={`flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-2 text-xs md:text-sm font-medium rounded transition-colors ${
           currentPage === 1
             ? 'text-gray-400 cursor-not-allowed'
             : 'text-[#1EA4CE] hover:bg-gray-50'
         }`}
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg className="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
-        Prev
+        <span className="hidden md:inline">Prev</span>
       </button>
 
       {/* Page Numbers */}
@@ -84,11 +84,11 @@ function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) 
         {visiblePages.map((page, index) => (
           <React.Fragment key={index}>
             {page === '...' ? (
-              <span className="px-3 py-2 text-sm text-gray-500">...</span>
+              <span className="px-2 md:px-3 py-1 md:py-2 text-xs md:text-sm text-gray-500">...</span>
             ) : (
               <button
                 onClick={() => onPageChange(page as number)}
-                className={`min-w-[32px] h-[32px] flex items-center justify-center text-sm font-medium rounded transition-colors ${
+                className={`min-w-[28px] md:min-w-[32px] h-[28px] md:h-[32px] flex items-center justify-center text-xs md:text-sm font-medium rounded transition-colors ${
                   currentPage === page
                     ? 'bg-[#1EA4CE] text-white'
                     : 'text-gray-700 hover:bg-gray-100'
@@ -105,14 +105,14 @@ function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) 
       <button
         onClick={handleNext}
         disabled={currentPage === totalPages}
-        className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded transition-colors ${
+        className={`flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-2 text-xs md:text-sm font-medium rounded transition-colors ${
           currentPage === totalPages
             ? 'text-gray-400 cursor-not-allowed'
             : 'text-[#1EA4CE] hover:bg-gray-50'
         }`}
       >
-        Next
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <span className="hidden md:inline">Next</span>
+        <svg className="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </button>

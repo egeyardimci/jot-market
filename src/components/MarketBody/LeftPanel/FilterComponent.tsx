@@ -25,17 +25,17 @@ function FilterComponent({
   );
 
   return (
-    <div className="w-full h-full max-w-sm bg-white border-r border-gray-200">
+    <div className="w-full h-full bg-white border border-gray-200 lg:border-r lg:border-l-0 lg:border-t-0 lg:border-b-0 rounded lg:rounded-none">
 
       {/* Search Input */}
-      <div className="p-4">
+      <div className="p-3 lg:p-4">
         <div className="relative">
           <input
             type="text"
             placeholder="Search tag"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full px-3 py-2 border-2 border-neutral-200 rounded-sm text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1EA4CE] focus:border-[#1EA4CE]"
+            className="w-full px-2 lg:px-3 py-2 border-2 border-neutral-200 rounded-sm text-xs lg:text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1EA4CE] focus:border-[#1EA4CE]"
           />
         </div>
         <div className="overflow-y-scroll overflow-x-auto max-h-[145px] p-[2px]">

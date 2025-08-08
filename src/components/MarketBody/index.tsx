@@ -4,7 +4,7 @@ import RightPanel from "./RightPanel";
 
 function MarketBody() {
   return (
-    <div className=" bg-gray-100 min-w-[860px] w-full flex-1 flex flex-row items-start justify-center bg-[#FAFAFA] pr-[104px] pl-[104px] gap-[16px] pt-[39px]">
+    <div className="pb-[50px] md:pb-[100px] bg-[#FAFAFA] w-full flex-1 flex flex-col lg:flex-row items-start justify-center px-4 md:px-[104px] gap-4 lg:gap-[16px] pt-4 md:pt-[39px]">
       <LeftPanel />
       <MiddlePanel />
       <RightPanel />
