@@ -1,3 +1,5 @@
+import { Check } from "lucide-react";
+
 interface FilterComponentProps {
   name?: string;
 }
@@ -18,7 +20,9 @@ function FilterComponent({name}: FilterComponentProps) {
         </div>
         <div className="overflow-y-scroll overflow-x-auto max-h-[145px] p-[2px]">
         <div className="flex gap-2 flex-row justify-start items-center mt-[18px]">
-            <div className="w-5 h-5 bg-white rounded-sm shadow-[0px_1px_7px_0px_rgba(93,56,192,0.40)]" />
+            <div className="flex justify-center items-center w-5 h-5 bg-[#1EA4CE] rounded-sm shadow-[0px_1px_7px_0px_rgba(93,56,192,0.40)]">
+              <Check size={16} color="white" />
+            </div>
             <span className="justify-center text-neutral-600 text-sm font-normal font-['Open_Sans'] leading-none tracking-tight"> TAG </span>
             <span className="justify-center text-neutral-400 text-sm font-normal font-['Open_Sans'] leading-none tracking-tight"> (18) </span>
         </div>

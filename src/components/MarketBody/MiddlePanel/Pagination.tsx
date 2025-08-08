@@ -67,7 +67,7 @@ function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) 
       <button
         onClick={handlePrevious}
         disabled={currentPage === 1}
-        className={`flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-2 text-xs md:text-sm font-medium rounded transition-colors ${
+        className={`cursor-pointer flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-2 text-xs md:text-sm font-medium rounded transition-colors ${
           currentPage === 1
             ? 'text-gray-400 cursor-not-allowed'
             : 'text-[#1EA4CE] hover:bg-gray-50'
@@ -88,7 +88,7 @@ function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) 
             ) : (
               <button
                 onClick={() => onPageChange(page as number)}
-                className={`min-w-[28px] md:min-w-[32px] h-[28px] md:h-[32px] flex items-center justify-center text-xs md:text-sm font-medium rounded transition-colors ${
+                className={`cursor-pointer min-w-[28px] md:min-w-[32px] h-[28px] md:h-[32px] flex items-center justify-center text-xs md:text-sm font-medium rounded transition-colors ${
                   currentPage === page
                     ? 'bg-[#1EA4CE] text-white'
                     : 'text-gray-700 hover:bg-gray-100'
@@ -105,7 +105,7 @@ function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) 
       <button
         onClick={handleNext}
         disabled={currentPage === totalPages}
-        className={`flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-2 text-xs md:text-sm font-medium rounded transition-colors ${
+        className={`cursor-pointer flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-2 text-xs md:text-sm font-medium rounded transition-colors ${
           currentPage === totalPages
             ? 'text-gray-400 cursor-not-allowed'
             : 'text-[#1EA4CE] hover:bg-gray-50'

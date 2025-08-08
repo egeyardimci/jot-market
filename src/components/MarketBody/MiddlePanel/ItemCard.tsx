@@ -15,7 +15,7 @@ function ItemCard({ item }: { item: { name: string; price: number } }) {
         <span className="text-xs md:text-sm h-8 md:h-[40px] line-clamp-2">{item.name}</span>
       </div>
       <div className="flex items-center w-full px-2 pb-2 mt-1 md:mt-2">
-        <button className="w-full text-white bg-[#1EA4CE] rounded-[2px] py-1 text-sm">
+        <button className="cursor-pointer w-full text-white bg-[#1EA4CE] rounded-[2px] py-1 text-sm">
           Add
         </button>
       </div>
