@@ -1,20 +1,25 @@
-interface SortOption {
-  id: string;
-  label: string;
-}
+import { useState } from "react";
 
-interface SortingPanelProps {
-  options: SortOption[];
-  selectedOption: string;
-  onOptionSelect: (optionId: string) => void;
-}
+function SortingPanel() {
+  const [selectedOption, setSelectedOption] = useState('price-low-high');
 
-function SortingPanel({ options, selectedOption, onOptionSelect }: SortingPanelProps) {
+  const sortingOptions = [
+    { id: 'price-low-high', label: 'Price low to high' },
+    { id: 'price-high-low', label: 'Price high to low' },
+    { id: 'new-old', label: 'New to old' },
+    { id: 'old-new', label: 'Old to new' },
+  ];
+
+  const onOptionSelect = (optionId: string) => {
+    setSelectedOption(optionId);
+    console.log('Selected sorting:', optionId);
+  };
+
   return (
     <div className="w-full bg-white rounded-[2px] p-4">
       {/* Options */}
       <div className="space-y-3">
-        {options.map((option) => (
+        {sortingOptions.map((option) => (
           <label
             key={option.id}
             className="flex items-center gap-3 cursor-pointer group"

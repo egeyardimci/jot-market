@@ -1,28 +1,8 @@
-interface Tag {
-  id: string;
-  name: string;
-  count: number;
+interface FilterComponentProps {
+  name?: string;
 }
 
-interface TagsFilterProps {
-  tags: Tag[];
-  onTagSelect: (tagId: string) => void;
-  selectedTag: string;
-  searchQuery: string;
-  onSearchChange: (query: string) => void;
-  totalItems: number;
-}
-
-function FilterComponent({ 
-  tags, 
-  onTagSelect, 
-  selectedTag, 
-  searchQuery, 
-  onSearchChange,
-}: TagsFilterProps) {
-  const filteredTags = tags.filter(tag => 
-    tag.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+function FilterComponent({name}: FilterComponentProps) {
 
   return (
     <div className="w-full h-full bg-white border border-gray-200 lg:border-r lg:border-l-0 lg:border-t-0 lg:border-b-0 rounded lg:rounded-none">
@@ -32,9 +12,7 @@ function FilterComponent({
         <div className="relative">
           <input
             type="text"
-            placeholder="Search tag"
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
+            placeholder={`Search ${name || 'products'}`}
             className="w-full px-2 lg:px-3 py-2 border-2 border-neutral-200 rounded-sm text-xs lg:text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1EA4CE] focus:border-[#1EA4CE]"
           />
         </div>

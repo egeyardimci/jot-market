@@ -28,7 +28,7 @@ function Footer() {
           </div>
           
           <div className="flex flex-col lg:flex-row items-center gap-2 lg:gap-4 text-xs lg:text-sm text-white/70">
-            <span>&copy; 2024 Market. All rights reserved.</span>
+            <span>&copy; 2025 Market. All rights reserved.</span>
             <div className="flex gap-2 lg:gap-4">
               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
               <a href="#" className="hover:text-white transition-colors">Terms of Service</a>

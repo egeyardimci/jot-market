@@ -1,73 +1,19 @@
-import { useState } from "react";
-import FilterComponent from "./FilterComponent";
-import SortingPanel from "./SortingPanel";
 import LeftPanelComponent from "./LeftPanelComponent";
+import { LeftPanelItems } from "./LeftPanelItems";
 
 function LeftPanel() {
 
-  const [selectedTag, setSelectedTag] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const sampleTags = [
-    { id: 'beach', name: 'Beach', count: 9 },
-    { id: 'people', name: 'People', count: 9 },
-    { id: 'bicycle', name: 'Bicycle', count: 0 },
-    { id: 'nature', name: 'Nature', count: 15 },
-    { id: 'city', name: 'City', count: 7 },
-  ];
-
-  const handleTagSelect = (tagId: string) => {
-    setSelectedTag(tagId);
-    console.log('Selected tag:', tagId);
-  };
-
-  const handleSearchChange = (query: string) => {
-    setSearchQuery(query);
-  };
-
-  const [selectedSort, setSelectedSort] = useState('price-low-high');
-
-  const sortingOptions = [
-    { id: 'price-low-high', label: 'Price low to high' },
-    { id: 'price-high-low', label: 'Price high to low' },
-    { id: 'new-old', label: 'New to old' },
-    { id: 'old-new', label: 'Old to new' },
-  ];
-
-  const handleSortChange = (optionId: string) => {
-    setSelectedSort(optionId);
-    console.log('Selected sorting:', optionId);
-  };
-
   return (
     <div className="mb-4 lg:mb-8 lg:sticky lg:top-[118px] z-50 w-full lg:min-w-[200px] lg:w-[296px] flex flex-col items-start justify-start gap-4 lg:gap-[16px]">
-      <LeftPanelComponent heading="Sorting">
-        <SortingPanel
-            options={sortingOptions}
-            selectedOption={selectedSort}
-            onOptionSelect={handleSortChange}
-        />
-      </LeftPanelComponent>
-      <LeftPanelComponent heading="Filtering">
-        <FilterComponent
-          tags={sampleTags}
-          onTagSelect={handleTagSelect}
-          selectedTag={selectedTag}
-          searchQuery={searchQuery}
-          onSearchChange={handleSearchChange}
-          totalItems={24}
-        />
-      </LeftPanelComponent>
-      <LeftPanelComponent heading="Filtering">
-        <FilterComponent
-          tags={sampleTags}
-          onTagSelect={handleTagSelect}
-          selectedTag={selectedTag}
-          searchQuery={searchQuery}
-          onSearchChange={handleSearchChange}
-          totalItems={24}
-        />
-      </LeftPanelComponent>
+      {
+        LeftPanelItems.map(item => (
+          <LeftPanelComponent
+            key={item.id} 
+            name={item.name}
+            >
+            {item.component()}
+            </LeftPanelComponent>
+      ))}
     </div>
   );
 }
