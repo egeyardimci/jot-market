@@ -14,7 +14,7 @@ function ItemCard({ item }: { item: { name: string; price: number; itemType: str
     <div className="w-full h-[200px] md:h-[245px] flex flex-col items-start justify-between bg-white border border-gray-300 rounded-[2px]">
       <div className="w-full h-20 md:h-[124px] flex justify-center items-center">
         <img
-          src={item.itemType === 'mug' ? "/mug.svg" : "/shirt.svg"} // TODO: refactor here for more flexibility
+          src={item.itemType === 'mug' ? "/jot-market/mug.svg" : "/jot-market/shirt.svg"} // TODO: refactor here for more flexibility
           alt={item.name}
           className="w-full h-full object-cover rounded-t-[2px]"
         />

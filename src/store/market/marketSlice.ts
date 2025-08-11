@@ -54,7 +54,7 @@ const initialState: MarketState = {
 export const fetchMarketItems = createAsyncThunk(
   "market/fetchItems",
   async () => {
-    const response = await fetch("/items.json");
+    const response = await fetch("/jot-market/items.json");
     return (await response.json()) as MarketItem[];
   }
 );
