@@ -33,6 +33,7 @@ interface MarketState {
   selectedItemType: string | null;
   sortingType: string;
   filteredItems: MarketItem[];
+  loading: boolean;
 }
 
 const initialState: MarketState = {
@@ -46,7 +47,8 @@ const initialState: MarketState = {
   itemTypes: [],
   selectedItemType: null,
   sortingType: sortingTypes.PRICE_LOW_TO_HIGH.id,
-  filteredItems : []
+  filteredItems : [],
+  loading : true
 };
 
 export const fetchMarketItems = createAsyncThunk(
@@ -186,6 +188,7 @@ const marketSlice = createSlice({
       state.selectedItemType = state.itemTypes.length > 0 ? state.itemTypes[0] : null;
 
       state.filteredItems = filterAndSortItems(state);
+      state.loading = false;
     });
   }
 });
