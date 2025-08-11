@@ -1,15 +1,25 @@
 import { useState } from 'react';
 import PriceText from "../../PriceText";
 import ProductItem from "./ProductItem";
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch, RootState } from '../../../store';
+import { clearCart, type CartItem } from '../../../store/cart/cartSlice';
 
 function RightPanel() {
   const [isHovered, setIsHovered] = useState(false);
+  const cartItems: CartItem[] = useSelector<RootState, CartItem[]>((state) => state.cart.items);
+  const cartPrice: number = useSelector<RootState, number>((state) => state.cart.totalAmount);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleCheckout = () => {
+    dispatch(clearCart());
+  };
 
   return (
-    <div className="mb-4 lg:mb-8 lg:sticky lg:top-[118px] z-50 w-full lg:min-w-[200px] lg:w-[296px] min-h-[250px] lg:min-h-[312px] h-full flex flex-col items-start justify-start border-solid border-4 lg:border-[8px] border-[#1EA4CE] rounded-[2px]">
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
+    <div className="mb-4 lg:mb-8  z-50 w-full lg:min-w-[200px] lg:w-[296px] min-h-[250px] lg:min-h-[312px] h-full flex flex-col items-start justify-start border-solid border-4 lg:border-[8px] border-[#1EA4CE] rounded-[2px]">
+      {cartItems.map((cartItem) => (
+        <ProductItem key={cartItem.item.slug} cartItem={cartItem} />
+      ))}
 
       <div className="w-full h-[87px] flex items-center justify-end bg-white">
         <button
@@ -30,7 +40,7 @@ function RightPanel() {
                   : 'transform translate-y-0 opacity-100'
               }`}
             >
-              <PriceText price={99.99} />
+              <PriceText price={cartPrice} />
             </div>
             
             {/* Checkout Text */}
@@ -40,6 +50,7 @@ function RightPanel() {
                   ? 'transform translate-y-0 opacity-100' 
                   : 'transform translate-y-full opacity-0'
               }`}
+              onClick={handleCheckout}
             >
               Checkout
             </div>

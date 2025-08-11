@@ -1,0 +1,20 @@
+<svg width="100" height="100" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#f5f5f5"/>
+  
+  <!-- Mug body -->
+  <rect x="50" y="60" width="80" height="90" rx="5" fill="#e0e0e0"/>
+  
+  <!-- Mug handle -->
+  <path d="M130 85 Q155 85, 155 110 Q155 135, 130 135" 
+        fill="none" 
+        stroke="#e0e0e0" 
+        stroke-width="12" 
+        stroke-linecap="round"/>
+  
+  <!-- Inner shadow/depth -->
+  <rect x="55" y="65" width="70" height="80" rx="3" fill="#d0d0d0"/>
+  
+  <!-- Border -->
+  <rect width="200" height="200" fill="none" stroke="#ddd" stroke-width="1"/>
+</svg>

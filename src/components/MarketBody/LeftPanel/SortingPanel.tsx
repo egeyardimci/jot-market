@@ -1,18 +1,16 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sortingTypes } from "../../../store/market/sortingTypes";
+import { type AppDispatch, type RootState } from "../../../store";
+import { setSortingType } from "../../../store/market/marketSlice";
 
 function SortingPanel() {
-  const [selectedOption, setSelectedOption] = useState('price-low-high');
 
-  const sortingOptions = [
-    { id: 'price-low-high', label: 'Price low to high' },
-    { id: 'price-high-low', label: 'Price high to low' },
-    { id: 'new-old', label: 'New to old' },
-    { id: 'old-new', label: 'Old to new' },
-  ];
+  const sortingOptions = Object.values(sortingTypes);
+  const selectedOption = useSelector<RootState>((state) => state.market.sortingType);
+  const dispatch = useDispatch<AppDispatch>();
 
   const onOptionSelect = (optionId: string) => {
-    setSelectedOption(optionId);
-    console.log('Selected sorting:', optionId);
+    dispatch(setSortingType(optionId));
   };
 
   return (
@@ -27,8 +25,8 @@ function SortingPanel() {
             <input
               type="radio"
               name="sorting"
-              value={option.id}
-              checked={selectedOption === option.id}
+              value={option.value}
+              checked={selectedOption === option.value}
               onChange={() => onOptionSelect(option.id)}
               className="sr-only"
             />
@@ -52,7 +50,7 @@ function SortingPanel() {
                 ? 'text-gray-900 font-medium' 
                 : 'text-gray-600 group-hover:text-gray-800'
             }`}>
-              {option.label}
+              {option.value}
             </span>
           </label>
         ))}

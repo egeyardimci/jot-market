@@ -17,11 +17,11 @@ export const LeftPanelItems: LeftPanelItem[] = [
   {
     id: 'brands',
     name: 'Brands',
-    component: () => <FilterComponent name={'Brands'} />
+    component: () => <FilterComponent name={'Brands'} id="brands" />
   },
   {
     id: 'tags',
     name: 'Tags',
-    component: () => <FilterComponent name={'Tags'} />
+    component: () => <FilterComponent name={'Tags'} id="tags" />
   }
 ];
