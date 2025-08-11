@@ -17,30 +17,36 @@ export interface FilterOptionType {
   count: number;
 }
 
+export interface FilterOptionByItemType {
+  [key: string]: FilterOptionType[];
+}
+
 interface MarketState {
   items: MarketItem[];
   page: number;
   pageSize: number;
-  brands: FilterOptionType[];
+  brands: FilterOptionByItemType;
   selectedBrands: string[];
-  tags: FilterOptionType[];
+  tags: FilterOptionByItemType;
   selectedTags: string[];
   itemTypes: string[];
   selectedItemType: string | null;
   sortingType: string;
+  filteredItems: MarketItem[];
 }
 
 const initialState: MarketState = {
   items: [],
   page: 1,
   pageSize: 52,
-  brands: [],
+  brands: {},
   selectedBrands: [],
-  tags: [],
+  tags: {},
   selectedTags: [],
   itemTypes: [],
   selectedItemType: null,
   sortingType: sortingTypes.PRICE_LOW_TO_HIGH.id,
+  filteredItems : []
 };
 
 export const fetchMarketItems = createAsyncThunk(
@@ -51,12 +57,56 @@ export const fetchMarketItems = createAsyncThunk(
   }
 );
 
+const filterAndSortItems = (state: MarketState): MarketItem[] => {
+  let filtered = [...state.items];
+  
+  // Filter by selected brands
+  if (state.selectedBrands.length > 0) {
+    filtered = filtered.filter(item => 
+      state.selectedBrands.includes(item.manufacturer)
+    );
+  }
+  
+  // Filter by selected tags
+  if (state.selectedTags.length > 0) {
+    filtered = filtered.filter(item => 
+      item.tags.some(tag => state.selectedTags.includes(tag))
+    );
+  }
+  
+  // Filter by item type
+  if (state.selectedItemType) {
+    filtered = filtered.filter(item => 
+      item.itemType === state.selectedItemType
+    );
+  }
+  
+  // Sort items
+  switch (state.sortingType) {
+    case sortingTypes.PRICE_LOW_TO_HIGH.id:
+      filtered.sort((a, b) => a.price - b.price);
+      break;
+    case sortingTypes.PRICE_HIGH_TO_LOW.id:
+      filtered.sort((a, b) => b.price - a.price);
+      break;
+    case sortingTypes.NEWEST_FIRST.id:
+      filtered.sort((a, b) => b.added - a.added);
+      break;
+    case sortingTypes.OLDEST_FIRST.id:
+      filtered.sort((a, b) => a.added - b.added);
+      break;
+  }
+  
+  return filtered;
+};
+
 const marketSlice = createSlice({
   name: "market",
   initialState,
   reducers: {
     setSortingType: (state, action) => {
       state.sortingType = action.payload;
+      state.filteredItems = filterAndSortItems(state);
     },
     toggleOption: (state, action) => {
       const {type, payload} = action.payload;
@@ -76,36 +126,19 @@ const marketSlice = createSlice({
           }
           break;
       }
+      state.filteredItems = filterAndSortItems(state);
     },
     setItemType: (state, action) => {
       state.selectedItemType = action.payload;
+      state.filteredItems = filterAndSortItems(state);
+    },
+    setPage : (state, action) => {
+      state.page = action.payload;
     }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchMarketItems.fulfilled, (state, action) => {
       state.items = action.payload;
-      
-      // Count brands
-      const brandCounts = new Map<string, number>();
-      action.payload.forEach(item => {
-        if (item.manufacturer) {
-          brandCounts.set(item.manufacturer, (brandCounts.get(item.manufacturer) || 0) + 1);
-        }
-      });
-      state.brands = Array.from(brandCounts.entries())
-        .map(([id, count]) => ({ id, count }))
-        .sort((a, b) => a.id.localeCompare(b.id)); // Sort by brand name
-      
-      // Count tags
-      const tagCounts = new Map<string, number>();
-      action.payload.forEach(item => {
-        item.tags.forEach(tag => {
-          tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
-        });
-      });
-      state.tags = Array.from(tagCounts.entries())
-        .map(([id, count]) => ({ id, count }))
-        .sort((a, b) => a.id.localeCompare(b.id)); // Sort by tag name
       
       // Extract unique item types
       const itemTypesSet = new Set<string>();
@@ -115,10 +148,47 @@ const marketSlice = createSlice({
         }
       });
       state.itemTypes = Array.from(itemTypesSet).sort();
+      
+      // Count tags
+      const tagCounts = new Map<string, Map<string, number>>();
+      action.payload.forEach(item => {
+        item.tags.forEach(tag => {
+          if (!tagCounts.has(item.itemType)) {
+            tagCounts.set(item.itemType, new Map<string, number>());
+          }
+          tagCounts.get(item.itemType)!.set(tag, (tagCounts.get(item.itemType)!.get(tag) || 0) + 1);
+        });
+      });
+      itemTypesSet.forEach(type => {
+        state.tags[type] = Array.from(tagCounts.get(type)?.entries() || [])
+          .map(([id, count]) => ({ id, count }))
+          .sort((a, b) => a.id.localeCompare(b.id)); // Sort by tag name
+      });
+
+      // Count brands
+      const brandCounts = new Map<string, Map<string, number>>();
+      action.payload.forEach(item => {
+        if (brandCounts.has(item.itemType)) {
+          brandCounts.get(item.itemType)!.set(item.manufacturer, (brandCounts.get(item.itemType)!.get(item.manufacturer) || 0) + 1);
+        }
+        else{
+          brandCounts.set(item.itemType, new Map<string, number>());
+          brandCounts.get(item.itemType)!.set(item.manufacturer, 1);
+        }
+      });
+
+      itemTypesSet.forEach(type => {
+        state.brands[type] = Array.from(brandCounts.get(type)?.entries() || [])
+          .map(([id, count]) => ({ id, count }))
+          .sort((a, b) => a.id.localeCompare(b.id)); // Sort by brand name
+      });
+
       state.selectedItemType = state.itemTypes.length > 0 ? state.itemTypes[0] : null;
+
+      state.filteredItems = filterAndSortItems(state);
     });
   }
 });
 
-export const { toggleOption, setItemType, setSortingType } = marketSlice.actions;
+export const { toggleOption, setItemType, setSortingType, setPage } = marketSlice.actions;
 export default marketSlice.reducer;

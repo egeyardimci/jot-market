@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RootState } from "../../../../store";
 import FilterOption from "./FilterOption";
 import { capitalizeFirst } from "../../../../utils";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { toggleOption, type FilterOptionType } from "../../../../store/market/marketSlice";
 
 interface FilterComponentProps {
@@ -12,10 +12,17 @@ interface FilterComponentProps {
 
 function FilterComponent({name, id}: FilterComponentProps) {
 
-  const filterOptions = useSelector((state: RootState) => state.market[`${id}` as keyof RootState['market']]) as FilterOptionType[];
+  const selectedItemType = useSelector((state: RootState) => state.market.selectedItemType);
+  const filterOptions = useSelector((state: RootState) => state.market[`${id}` as keyof RootState['market']]);
   const selectedOptions = useSelector((state: RootState) => state.market[`selected${capitalizeFirst(id)}` as keyof RootState['market']]) as string[];
   const selectedOptionsSet = useMemo(() => new Set(selectedOptions), [selectedOptions]);
+  const [search,setSearch] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
+
+  const searchedOptions = useMemo(() => {
+  const filterOptionsForItemType = (filterOptions?.[selectedItemType as keyof typeof filterOptions] ?? []) as FilterOptionType[];
+    return filterOptionsForItemType.filter(option => option.id.toLowerCase().includes(search.toLowerCase()));
+  }, [filterOptions, search, selectedItemType]);
 
   const handleToggle = (option: string) => {
     dispatch(toggleOption({ type: id, payload: option }));
@@ -31,10 +38,11 @@ function FilterComponent({name, id}: FilterComponentProps) {
             type="text"
             placeholder={`Search ${name || 'products'}`}
             className="w-full px-2 lg:px-3 py-2 border-2 border-neutral-200 rounded-sm text-xs lg:text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1EA4CE] focus:border-[#1EA4CE]"
+            onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <div className="overflow-y-scroll overflow-x-auto max-h-[145px] p-[2px]">
-          {filterOptions?.map((option) => (
+          {searchedOptions?.map((option) => (
             <FilterOption
               key={option.id}
               label={option.id}

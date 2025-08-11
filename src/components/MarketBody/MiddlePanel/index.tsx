@@ -1,21 +1,24 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ItemCard from "./ItemCard";
 import MiddlePanelButtons from "./MiddlePanelButtons";
 import Pagination from "./Pagination";
-import type { RootState } from "../../../store";
-import { useEffect, useState } from "react";
-import type { MarketItem } from "../../../store/market/marketSlice";
+import type { AppDispatch, RootState } from "../../../store";
+import { setPage, type MarketItem } from "../../../store/market/marketSlice";
+import { useMemo } from "react";
 
 function MiddlePanel() {
-  const marketItems = useSelector((state: RootState) => state.market.items);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const marketItems = useSelector((state: RootState) => state.market.filteredItems);
   const currentPage = useSelector((state: RootState) => state.market.page);
   const pageSize = useSelector((state: RootState) => state.market.pageSize);
 
-  const [pageItems, setPageItems] = useState<MarketItem[]>(marketItems.slice((currentPage - 1) * pageSize, currentPage * pageSize));
+  const pageItems : MarketItem[] = useMemo(() => marketItems.slice((currentPage - 1) * pageSize, currentPage * pageSize), [marketItems, currentPage, pageSize]);
 
-  useEffect(() => {
-    setPageItems(marketItems.slice((currentPage - 1) * pageSize, currentPage * pageSize));
-  }, [currentPage, pageSize, marketItems]);
+  const onPageChange = (page: number) =>{
+    // Dispatch an action to update the current page
+    dispatch(setPage(page));
+  }
 
   return (
     <div className="w-full flex-1 flex flex-col items-start justify-center">
@@ -28,7 +31,7 @@ function MiddlePanel() {
           <ItemCard key={item.slug} item={item} />
         ))}
       </div>
-      <Pagination currentPage={currentPage} totalPages={Math.ceil(marketItems.length / pageSize)} onPageChange={(page) => console.log(page)} />
+      <Pagination currentPage={currentPage} totalPages={Math.ceil(marketItems.length / pageSize)} onPageChange={onPageChange} />
     </div>
 
   );
