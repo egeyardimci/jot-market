@@ -18,12 +18,11 @@ function FilterComponent({name, id}: FilterComponentProps) {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleToggle = (option: string) => {
-    console.log(option,"asDASDASD")
     dispatch(toggleOption({ type: id, payload: option }));
   };
 
   return (
-    <div className="w-full h-full bg-white border border-gray-200 lg:border-r lg:border-l-0 lg:border-t-0 lg:border-b-0 rounded lg:rounded-none">
+    <div className="w-full h-full bg-white rounded-sm shadow-[0px_6px_24px_0px_rgba(93,62,188,0.04)]">
 
       {/* Search Input */}
       <div className="p-3 lg:p-4">

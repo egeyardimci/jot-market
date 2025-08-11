@@ -10,7 +10,7 @@ interface FilterOptionProps {
 const FilterOption = ({ label, isSelected , count, onToggle }: FilterOptionProps) => {
   if (isSelected) return (
     <div className="cursor-pointer flex gap-2 flex-row justify-start items-center mt-[18px]" onClick={onToggle}>
-        <div className="flex justify-center items-center w-5 h-5 bg-[#1EA4CE] rounded-sm shadow-[0px_1px_7px_0px_rgba(93,56,192,0.40)]">
+        <div className="flex justify-center items-center w-5 h-5 bg-[#1EA4CE] rounded-sm ">
           <Check size={16} color="white" />
         </div>
         <span className="justify-center text-neutral-600 text-sm font-normal font-['Open_Sans'] leading-none tracking-tight"> {label} </span>
@@ -20,7 +20,7 @@ const FilterOption = ({ label, isSelected , count, onToggle }: FilterOptionProps
 
   return (
       <div className="cursor-pointer flex gap-2 flex-row justify-start items-center mt-[18px]" onClick={onToggle}>
-        <div className="w-5 h-5 bg-white rounded-sm shadow-[0px_1px_7px_0px_rgba(93,56,192,0.40)]" />
+        <div className="w-5 h-5 bg-gray-300 rounded-sm" />
         <span className="justify-center text-neutral-600 text-sm font-normal font-['Open_Sans'] leading-none tracking-tight"> {label} </span>
         <span className="justify-center text-neutral-400 text-sm font-normal font-['Open_Sans'] leading-none tracking-tight"> ({count}) </span>
       </div>

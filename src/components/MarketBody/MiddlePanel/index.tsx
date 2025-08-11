@@ -23,7 +23,7 @@ function MiddlePanel() {
         <span className="text-[#6F6F6F] text-lg md:text-[20px]">Products</span>
         <MiddlePanelButtons />
       </div>
-      <div className="bg-white w-full h-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-[repeat(auto-fit,minmax(160px,160px))] justify-center gap-3 md:gap-[24px] p-3 md:p-[20px] overflow-y-auto">
+      <div className="bg-white w-full h-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-[repeat(auto-fit,minmax(160px,160px))] justify-center gap-3 md:gap-[24px] p-3 md:p-[20px] overflow-y-auto rounded-sm shadow-[0px_6px_24px_0px_rgba(93,62,188,0.04)] " >
         {pageItems.map((item) => (
           <ItemCard key={item.slug} item={item} />
         ))}

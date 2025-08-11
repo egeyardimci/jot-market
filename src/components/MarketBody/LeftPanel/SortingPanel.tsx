@@ -14,7 +14,7 @@ function SortingPanel() {
   };
 
   return (
-    <div className="w-full bg-white rounded-[2px] p-4">
+    <div className="w-full bg-white rounded-[2px] p-4 rounded-sm shadow-[0px_6px_24px_0px_rgba(93,62,188,0.04)]">
       {/* Options */}
       <div className="space-y-3">
         {sortingOptions.map((option) => (
