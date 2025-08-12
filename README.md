@@ -204,10 +204,6 @@ Production build generates:
 
 No environment variables are required for basic functionality. All configuration is handled through TypeScript constants and JSON files.
 
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
 ## 🚀 Performance
 
 - **Lighthouse Score**: Optimized for 90+ scores across all metrics
