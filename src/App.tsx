@@ -17,7 +17,7 @@ function App() {
 
   return (
     <>
-    <div className="w-full min-h-screen flex flex-col">
+    <div className="bg-[#1EA4CE] w-full min-h-screen flex flex-col">
       <Header />
       <MarketBody />
       <Footer />
