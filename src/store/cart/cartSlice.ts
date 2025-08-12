@@ -40,6 +40,9 @@ const cartSlice = createSlice({
       if(existingItem?.quantity === 0) {
         state.items = state.items.filter((i) => i.item.slug !== item.slug);
       }
+      if(state.totalAmount <= 0){
+        state.totalAmount = 0;
+      }
     },
     clearCart: (state) => {
       state.items = [];

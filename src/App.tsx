@@ -5,6 +5,7 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { fetchMarketItems } from "./store/market/marketSlice"
 import type { AppDispatch } from "./store"
+import Modals from "./components/Modals"
 
 function App() {
 
@@ -18,9 +19,10 @@ function App() {
     <>
     <div className="w-full min-h-screen flex flex-col">
       <Header />
-      <MarketBody/ >
+      <MarketBody />
       <Footer />
     </div>
+    <Modals />
     </>
   )
 }

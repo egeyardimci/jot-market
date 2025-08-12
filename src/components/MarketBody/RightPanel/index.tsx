@@ -3,8 +3,9 @@ import PriceText from "../../PriceText";
 import ProductItem from "./ProductItem";
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../../../store';
-import { clearCart, type CartItem } from '../../../store/cart/cartSlice';
+import { type CartItem } from '../../../store/cart/cartSlice';
 import { ShoppingBag } from 'lucide-react';
+import { openModal } from '../../../store/modals/modalsSlice';
 
 function RightPanel() {
   const [isHovered, setIsHovered] = useState(false);
@@ -13,7 +14,7 @@ function RightPanel() {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleCheckout = () => {
-    dispatch(clearCart());
+    dispatch(openModal('checkout'));
   };
 
   return (

@@ -1,6 +1,6 @@
-function PriceText({ price }: { price: number }) {
+function PriceText({ price, color = '[#1EA4CE]' }: { price: number, color?: string }) {
   return (
-    <span className=" text-[14px] font-semibold text-[#1EA4CE]">
+    <span className={` text-[14px] font-semibold text-${color}`}>
       ${price.toFixed(2)}
     </span>
   );
